@@ -1,0 +1,31 @@
+import random
+
+
+greetings = ["hello", "hi", "hey"]
+goodbyes = ["bye", "goodbye", "see you later"]
+questions = ["how are you", "what's your name", "what can you do"]
+default_response = "I'm just a simple chatbot."
+
+
+def respond_to_user(input_text):
+    input_text = input_text.lower()  
+    
+    if any(greeting in input_text for greeting in greetings):
+        return "Hello! How can I assist you today?"
+    
+    elif any(goodbye in input_text for goodbye in goodbyes):
+        return "Goodbye! Have a great day!"
+    
+    elif any(question in input_text for question in questions):
+        return "I'm just a chatbot. My purpose is to assist you with basic tasks."
+    
+    else:
+        return default_response
+while True:
+    user_input = input("User: ")
+    if user_input.lower() == "exit":
+        print("Chatbot: Goodbye!")
+        break
+    
+    response = respond_to_user(user_input)
+    print("Chatbot:", response)

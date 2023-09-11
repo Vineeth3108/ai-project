@@ -1,0 +1,32 @@
+import numpy as np
+
+# Create a user-item matrix (rows represent users, columns represent items)
+# Each cell (i, j) represents the rating given by user i to item j
+user_item_matrix = np.array([
+    [5, 4, 0, 0, 0],
+    [0, 0, 3, 4, 0],
+    [0, 0, 0, 5, 4],
+    [4, 0, 0, 0, 0],
+])
+
+# Define a function to recommend items to a user based on collaborative filtering
+def collaborative_filtering(user_item_matrix, user_id, num_recommendations=3):
+    user_ratings = user_item_matrix[user_id]
+    # Calculate the similarity between the user and all other users
+    similarities = np.dot(user_item_matrix, user_ratings) / (np.linalg.norm(user_item_matrix, axis=1) * np.linalg.norm(user_ratings))
+    # Sort users by similarity in descending order
+    sorted_users = np.argsort(similarities)[::-1]
+    
+    # Get recommendations from the most similar users
+    recommendations = []
+    for user in sorted_users:
+        if user != user_id and user_ratings[user] == 0:
+            recommendations.append(user)
+        if len(recommendations) >= num_recommendations:
+            break
+    
+    return recommendations
+
+# Recommend items to user 0
+recommended_items = collaborative_filtering(user_item_matrix, user_id=0, num_recommendations=3)
+print("Collaborative Filtering Recommendations for User 0:", recommended_items)
